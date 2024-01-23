@@ -111,3 +111,76 @@
 		div.style.display = "none";
 	   }
 	}
+
+// EDIT THE NOTE
+// Click the edit button to edit notes
+	let edit = document.getElementsByClassName("edit");
+	i;
+	let hideMessage;
+	for (i = 0; i < edit.length; i++){
+		edit[i].onclick = function() {
+		let div = this.parentElement;
+		let noteEditable = document.querySelector("#myNotes").contentEditable;
+		if (noteEditable == 'inherit' || noteEditable == 'false') {
+			document.querySelector("#myNotes").contentEditable = true;
+			textTwo.nodeValue = 'Ok?';
+		} else {
+			document.querySelector("#myNotes").contentEditable = false;
+			textTwo.nodeValue = 'Settings';
+			// Write a confirmation to the user
+			document.querySelector("#update").innerHTML = "Changes saved";
+			document.querySelector("#update").style.backgroundColor = "lightgreen";
+			document.querySelector("#update").style.border = "1px solid";
+			hideMessage = setTimeout(hideIt, 3000); // hide message in 3secs
+		}
+	  }
+	}
+
+// Create edit button and append it to each note
+	nodeList = document.getElementsByTagName("li");
+	i;
+	for (i = 0; i < nodeList.length; i++){
+	  spanTwo = createElement("span");
+	  textTwo = document.createTextNode("Ok?");
+	  spanTwo.className = "edit";
+	  spanTwo.appendChild(text);
+	  nodeList[i].appendChild(span);
+	}
+
+// Check if user has previously saved edits
+	function checkEdits() {
+		let textTwo = document.createTextNode("Ok?");
+		if(localStorage.userEdits != null)
+			document.querySelector("#saved-notes").innerHTML = localStorage.userEdits;
+		
+		// Hide a saved note when clicked close button
+		for (i = 0; i < close.length; i++){
+			close[i].onclick = function() {
+				let div = this.parentElement;
+				div.style.display = "none";
+			}
+		}
+	    for (i = 0; i < edit.length; i++){
+		edit[i].onclick = function() {
+		let div = this.parentElement;
+		
+		// Make notes editable when clicked edit button
+		let hideMessage;
+		let noteEditable = document.querySelector("#myNotes, #saved-notes").contentEditable;
+		if (noteEditable == 'inherit' || noteEditable == 'false') {
+			document.querySelector("#myNotes").contentEditable = true;
+			document.querySelector("#saved-notes").contentEditable = true;
+			textTwo.nodeValue = 'Ok?';
+		} else {
+			document.querySelector("#myNotes").contentEditable = false;
+			document.querySelector("#saved-notes").contentEditable = false;
+			textTwo.nodeValue = 'Settings';
+			// Write a confirmation to the user
+			document.querySelector("#update").innerHTML = "Changes saved";
+			document.querySelector("#update").style.backgroundColor = "lightgreen";
+			document.querySelector("#update").style.border = "1px solid";
+			hideMessage = setTimeout(hideIt, 3000); // hide message in 3secs
+		  }
+	    }
+	  }
+	}
