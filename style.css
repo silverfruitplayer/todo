@@ -121,6 +121,8 @@ ul li:nth-child(odd){
         border: none;
         padding: 50px 50px;
         border-radius: 5px;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
         font-size: 16px;
         transition: background-color 0.3s;
