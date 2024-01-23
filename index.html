@@ -1,71 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>Notes App</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+	<meta name="HandheldFriendly" content="true">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Notes Taker</title>
 </head>
-<body>
-  <div id="app">
-    <h1>Notes App</h1>
-    <form id="noteForm">
-      <label for="title">Title:</label>
-      <input type="text" id="title" name="title" required>
-      <label for="content">Content:</label>
-      <textarea id="content" name="content" required></textarea>
-      <button type="button" onclick="addnote()">Add Note</button>
-    </form>
-    <ul id="notesList"></ul> <!-- This is where the notes will be displayed -->
+<body onload="checkEdits()">
+	<div class="container">
+	<h1>Simple Note App</h1>
+	<p>Create, save, and edit your notes easily</p>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-  const noteForm = document.getElementById('noteForm');
-  const notesList = document.getElementById('notesList');
+	<div class="buttons">
+	<button class="save-button" onclick="newElement()">Save</button>
+	<button class="delete-button" onclick="clearElement()">Clear</button>
+	</div>
+	
+	<div id="myDiv" class="new-note">
+		<textarea id="myInput" placeholder="What's on your mind?"></textarea>
+	</div>
 
-  async function fetchNotes() {
-    try {
-      const response = await fetch('/api/notes');
-      const notes = await response.json();
-      displayNotes(notes);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+	<div class="notespace">
+	<h3>Saved notes</h3>
+	<div id="emptytext"></div>
+	<div id="update"></div>
+	<ul id="saved-notes" contenteditable="true"></ul>
+	<ul id="myNotes" contenteditable="true">
+	</ul>
+	</div>
+	</div>
 
-  async function addnote() {
-  const title = document.getElementById('title').value;
-  const content = document.getElementById('content').value;
-
-  try {
-    const response = await fetch('/api/notes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ title, content }),
-    });
-
-    const newNote = await response.json();
-    displayNotes([newNote]);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-
-  function displayNotes(notes) {
-    notesList.innerHTML = '';
-    notes.forEach(note => {
-      const li = document.createElement('li');
-      li.textContent = `${note.title}: ${note.content}`;
-      notesList.appendChild(li);
-    });
-  }
-
-  // Fetch existing notes on page load
-  fetchNotes();
-});</script>
-  </div>
+<script src="main.js"></script>
+<footer>
+    <p>&copy; SilverFruitPlayer, All rights reserved.</p>
+    <div class="footer-buttons">
+      <button class="footer-button" onclick="git('https://github.com/silverfruitplayer')">GitHub (SilverFruitPlayer)</button>
+    </div>
+  </footer>
 </body>
 </html>
