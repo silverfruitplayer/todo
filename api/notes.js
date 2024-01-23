@@ -17,11 +17,10 @@ module.exports = async (req, res) => {
       const result = await pool.query('INSERT INTO notes (title, content) VALUES ($1, $2) RETURNING *', [title, content]);
       res.status(201).json(result.rows[0]);
     } else {
-      res.status(405).end(); // Method Not Allowed
+      res.status(405).json({ error: 'Method Not Allowed' });
     }
   } catch (error) {
     console.error(error);
-    res.status(500).send('Internal Server Error');
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
