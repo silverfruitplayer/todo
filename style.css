@@ -115,16 +115,20 @@ ul li:nth-child(odd){
   border-color: red;
 }
 
-footer {
-        flex-direction: column;
-        padding: 10px;
+.footer-button {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 50px 50px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
         user-select: none;
-      }
-      .footer-buttons {
-        flex-direction: column;
-        gap: 5px;
-        user-select: none;
-      }
+    }
+
+    .footer-button:hover {
+        background-color: #555;
     }
 
 @media(max-width: 768px){
