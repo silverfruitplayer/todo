@@ -8,6 +8,11 @@ body {
   min-height: 100vh;
   background-color: #f2f2f2;
 }
+.container{
+  width: 80%;
+  margin: auto;
+  overflow: hidden;
+}
 
 #app {
   text-align: center;
@@ -31,6 +36,25 @@ input, textarea {
   padding: 8px;
   margin-bottom: 10px;
   box-sizing: border-box;
+}
+
+.notespace {
+  margin-top: 20vh;
+}
+
+/* Style the button*/
+.delete-button, .save-button{
+  padding: 10px;
+  background: #660066;
+  color: #ffffff;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 10px;
+  width: 70px;
 }
 
 button {
