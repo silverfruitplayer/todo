@@ -8,7 +8,7 @@
 		li.appendChild(savedNote);
 		if (inputvalue === ''){
 			document.querySelector("#emptytext").innerHTML= "Please write something";
-			document.querySelector("#emptytext").style.backgroundColor = "pink";
+			document.querySelector("#emptytext").style.backgroundColor = "green";
 			document.querySelector("#emptytext").style.border = "1px solid";
 			hideEmptyTxt = setTimeout(spanEmptytxt, 3000); // hide message in 3secs
 		} else {
@@ -18,7 +18,7 @@
 
 		// Span edit button for each note
 		let spanTwo = document.createElement("span");
-	    textTwo = document.createTextNode("✓");
+	    textTwo = document.createTextNode("ok?");
 	    spanTwo.className = "edit";
 	    spanTwo.appendChild(textTwo);
 	    li.appendChild(spanTwo);
@@ -55,10 +55,10 @@
 		let noteEditable = document.querySelector("#myNotes").contentEditable;
 		if (noteEditable == 'inherit' || noteEditable == 'false') {
 			document.querySelector("#myNotes").contentEditable = true;
-			textTwo.nodeValue = '✓';
+			textTwo.nodeValue = 'Ok?';
 		} else {
 			document.querySelector("#myNotes").contentEditable = false;
-			textTwo.nodeValue = ':';
+			textTwo.nodeValue = 'Settings';
 			// Write a confirmation to the user
 			document.querySelector("#update").innerHTML = "Changes saved";
 			document.querySelector("#update").style.backgroundColor = "lightgreen";
@@ -119,10 +119,10 @@
 		let noteEditable = document.querySelector("#myNotes").contentEditable;
 		if (noteEditable == 'inherit' || noteEditable == 'false') {
 			document.querySelector("#myNotes").contentEditable = true;
-			textTwo.nodeValue = '✓';
+			textTwo.nodeValue = 'Ok?';
 		} else {
 			document.querySelector("#myNotes").contentEditable = false;
-			textTwo.nodeValue = ':';
+			textTwo.nodeValue = 'Settings';
 			// Write a confirmation to the user
 			document.querySelector("#update").innerHTML = "Changes saved";
 			document.querySelector("#update").style.backgroundColor = "lightgreen";
@@ -137,7 +137,7 @@
 	i;
 	for (i = 0; i < nodeList.length; i++){
 	  spanTwo = createElement("span");
-	  textTwo = document.createTextNode("✓");
+	  textTwo = document.createTextNode("Ok?");
 	  spanTwo.className = "edit";
 	  spanTwo.appendChild(text);
 	  nodeList[i].appendChild(span);
@@ -145,7 +145,7 @@
 
 // Check if user has previously saved edits
 	function checkEdits() {
-		let textTwo = document.createTextNode("✓");
+		let textTwo = document.createTextNode("Ok?");
 		if(localStorage.userEdits != null)
 			document.querySelector("#saved-notes").innerHTML = localStorage.userEdits;
 		
@@ -166,11 +166,11 @@
 		if (noteEditable == 'inherit' || noteEditable == 'false') {
 			document.querySelector("#myNotes").contentEditable = true;
 			document.querySelector("#saved-notes").contentEditable = true;
-			textTwo.nodeValue = '✓';
+			textTwo.nodeValue = 'Ok?';
 		} else {
 			document.querySelector("#myNotes").contentEditable = false;
 			document.querySelector("#saved-notes").contentEditable = false;
-			textTwo.nodeValue = ':';
+			textTwo.nodeValue = 'Settings';
 			// Write a confirmation to the user
 			document.querySelector("#update").innerHTML = "Changes saved";
 			document.querySelector("#update").style.backgroundColor = "lightgreen";
