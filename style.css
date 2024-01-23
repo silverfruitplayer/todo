@@ -46,7 +46,7 @@ textarea {
 
 .footer-button {
     position: fixed;
-    bottom: 0;
+    bottom: 6;
     left: 50%;
     transform: translateX(-50%);
     background-color: #333;
