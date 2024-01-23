@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <title>Personal Notes App</title>
+  <title>Notes App</title>
 </head>
 <body>
   <div id="app">
@@ -16,55 +16,82 @@
       <textarea id="content" name="content" required></textarea>
       <button type="button" onclick="addNote()">Add Note</button>
     </form>
-    <ul id="notesList"></ul> <!-- This is where the notes will be displayed -->
+    <ul id="notesList"></ul>
 
     <script>
-      document.addEventListener('DOMContentLoaded', async () => {
-        const noteForm = document.getElementById('noteForm');
+      const pool = {
+        query: async (sql, params) => {
+          // Simulated database query
+          console.log(`Executing query: ${sql}, Params: ${params}`);
+          // Replace this with your actual database logic
+          return { rows: [{ title: 'Sample Note', content: 'This is a sample note.' }] };
+        },
+      };
+
+      async function handleRequest(req) {
+        try {
+          if (req.method === 'GET') {
+            const result = await pool.query('SELECT * FROM notes');
+            return { status: 200, body: JSON.stringify(result.rows) };
+          } else if (req.method === 'POST') {
+            const { title, content } = req.body;
+            const result = await pool.query('INSERT INTO notes (title, content) VALUES ($1, $2) RETURNING *', [title, content]);
+            return { status: 201, body: JSON.stringify(result.rows[0]) };
+          } else {
+            return { status: 405, body: JSON.stringify({ error: 'Method Not Allowed' }) };
+          }
+        } catch (error) {
+          console.error(error);
+          return { status: 500, body: JSON.stringify({ error: 'Internal Server Error' }) };
+        }
+      }
+
+      const simulateFetch = async (url, options) => {
+        const req = { method: options.method, body: options.body ? JSON.parse(options.body) : undefined };
+        const response = await handleRequest(req);
+        return {
+          json: async () => JSON.parse(response.body),
+        };
+      };
+
+      const fetch = simulateFetch;
+
+      function displayNotes(notes) {
         const notesList = document.getElementById('notesList');
+        notesList.innerHTML = '';
+        notes.forEach(note => {
+          const li = document.createElement('li');
+          li.textContent = `${note.title}: ${note.content}`;
+          notesList.appendChild(li);
+        });
+      }
 
-        async function fetchNotes() {
-          try {
-            const response = await fetch('/api/notes');
-            const notes = await response.json();
-            displayNotes(notes);
-          } catch (error) {
-            console.error(error);
-          }
+      function addNote() {
+        const title = document.getElementById('title').value;
+        const content = document.getElementById('content').value;
+
+        fetch('/api/notes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ title, content }),
+        })
+          .then(response => response.json())
+          .then(newNote => displayNotes([newNote]))
+          .catch(error => console.error(error));
+      }
+
+      async function fetchNotes() {
+        try {
+          const initialNotes = await handleRequest({ method: 'GET' });
+          displayNotes(initialNotes);
+        } catch (error) {
+          console.error(error);
         }
+      }
 
-        async function addNote() {
-          const title = document.getElementById('title').value;
-          const content = document.getElementById('content').value;
-
-          try {
-            const response = await fetch('/api/notes', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ title, content }),
-            });
-
-            const newNote = await response.json();
-            displayNotes([newNote]);
-          } catch (error) {
-            console.error(error);
-          }
-        }
-
-        function displayNotes(notes) {
-          notesList.innerHTML = '';
-          notes.forEach(note => {
-            const li = document.createElement('li');
-            li.textContent = `${note.title}: ${note.content}`;
-            notesList.appendChild(li);
-          });
-        }
-
-        // Fetch existing notes on page load
-        fetchNotes();
-      });
+      fetchNotes();
     </script>
   </div>
 </body>
