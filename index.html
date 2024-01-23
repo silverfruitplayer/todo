@@ -14,7 +14,7 @@
       <input type="text" id="title" name="title" required>
       <label for="content">Content:</label>
       <textarea id="content" name="content" required></textarea>
-      <button type="button" onclick="addNote()">Add Note</button>
+      <button type="button" onclick="addnote()">Add Note</button>
     </form>
     <ul id="notesList"></ul> <!-- This is where the notes will be displayed -->
 
@@ -33,7 +33,7 @@
     }
   }
 
-  async function addNote() {
+  async function addnote() {
   const title = document.getElementById('title').value;
   const content = document.getElementById('content').value;
 
