@@ -87,6 +87,10 @@
 		document.querySelector("#myInput").value = '';
 	};
 
+        function git() {
+		 window.location.href = "https://github.com/silverfruitplayer";
+	};	
+
 // Create close button and append it to each note
 	let nodeList = document.getElementsByTagName("li");
 	let i;
