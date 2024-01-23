@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <title>Notes App</title>
+  <title>Personal Notes App</title>
 </head>
 <body>
   <div id="app">
@@ -14,11 +14,58 @@
       <input type="text" id="title" name="title" required>
       <label for="content">Content:</label>
       <textarea id="content" name="content" required></textarea>
-      <button type="submit">Add Note</button>
+      <button type="button" onclick="addNote()">Add Note</button>
     </form>
-    <ul id="notesList"></ul>
+    <ul id="notesList"></ul> <!-- This is where the notes will be displayed -->
+
+    <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+        const noteForm = document.getElementById('noteForm');
+        const notesList = document.getElementById('notesList');
+
+        async function fetchNotes() {
+          try {
+            const response = await fetch('/api/notes');
+            const notes = await response.json();
+            displayNotes(notes);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+
+        async function addNote() {
+          const title = document.getElementById('title').value;
+          const content = document.getElementById('content').value;
+
+          try {
+            const response = await fetch('/api/notes', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ title, content }),
+            });
+
+            const newNote = await response.json();
+            displayNotes([newNote]);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+
+        function displayNotes(notes) {
+          notesList.innerHTML = '';
+          notes.forEach(note => {
+            const li = document.createElement('li');
+            li.textContent = `${note.title}: ${note.content}`;
+            notesList.appendChild(li);
+          });
+        }
+
+        // Fetch existing notes on page load
+        fetchNotes();
+      });
+    </script>
   </div>
-  <script src="script.js"></script>
 </body>
 </html>
-
