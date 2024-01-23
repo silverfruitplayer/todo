@@ -6,6 +6,10 @@ body {
   font-family: sans-serif;
   font-size: 16px;
   padding: 0;
+  background-image: url('https://i.ibb.co/xz7rzgV/HD-wallpaper-note-paper-blue-pen-and-eyeglasses-on-white-surface-beside-keyboard.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   align-items: center;
   justify-content: center;
   margin: 0;
