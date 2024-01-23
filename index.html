@@ -1,43 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-	<meta name="HandheldFriendly" content="true">
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<title>Notes Taker</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta name="HandheldFriendly" content="true">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Notes Taker</title>
 </head>
 <body onload="checkEdits()">
-	<div class="container">
-	<h1>Notes Taker</h1>
-	<p>Create, save, and edit your notes easily</p>
+    <div class="container">
+        <h1>Notes Taker</h1>
+        <p>Create, save, and edit your notes easily</p>
 
-	<div class="buttons">
-	<button class="save-button" onclick="newElement()">Save</button>
-	<button class="delete-button" onclick="clearElement()">Clear</button>
-	</div>
-	
-	<div id="myDiv" class="new-note">
-		<textarea id="myInput" placeholder="Write Something to start over..."></textarea>
-	</div>
+        <form id="notesForm">
+            <div class="buttons">
+                <button type="button" class="save-button" onclick="submitForm('newElement')">Save</button>
+                <button type="button" class="delete-button" onclick="submitForm('clearElement')">Clear</button>
+            </div>
 
-	<div class="notespace">
-	<h3>Saved notes</h3>
-	<div id="emptytext"></div>
-	<div id="update"></div>
-	<ul id="saved-notes" contenteditable="false"></ul>
-	<ul id="myNotes" contenteditable="true">
-	</ul>
-	</div>
-	</div>
+            <div id="myDiv" class="new-note">
+                <textarea id="myInput" name="myInput" placeholder="Write Something to start over..."></textarea>
+            </div>
+        </form>
 
-<script src="script.js"></script>
-<footer>
-    <p>&copy; SilverFruitPlayer, All rights reserved.</p>
-    <div class="footer-buttons">
-      <button class="footer-button" onclick="git()">GitHub (SilverFruitPlayer)</button>
+        <div class="notespace">
+            <h3>Saved notes</h3>
+            <div id="emptytext"></div>
+            <div id="update"></div>
+            <ul id="saved-notes" contenteditable="false"></ul>
+            <ul id="myNotes" contenteditable="true"></ul>
+        </div>
     </div>
-  </footer>
+
+    <script src="script.js"></script>
+    <footer>
+        <p>&copy; SilverFruitPlayer, All rights reserved.</p>
+        <div class="footer-buttons">
+            <button class="footer-button" onclick="git()">GitHub (SilverFruitPlayer)</button>
+        </div>
+    </footer>
+
+    <script>
+        function submitForm(action) {
+            var formData = new FormData(document.getElementById('notesForm'));
+            formData.append('action', action);
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById("myNotes").innerHTML += xhr.responseText;
+                }
+            };
+            
+            xhr.open("POST", "script.php", true);
+            xhr.send(formData);
+        }
+
+        function git() {
+            window.location.href = "https://github.com/silverfruitplayer";
+        };
+    </script>
 </body>
 </html>
