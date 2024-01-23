@@ -44,6 +44,25 @@ textarea {
   margin-top: 20vh;
 }
 
+.footer-button {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 20px 50px; /* Adjusted padding for better aesthetics */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    user-select: none;
+}
+.footer-button:hover {
+    background-color: #555;
+}
+
 /* Style the button*/
 .delete-button, .save-button{
   padding: 10px;
@@ -116,22 +135,6 @@ ul li:nth-child(odd){
   padding: 12px;
   border-color: red;
 }
-
-.footer-button {
-        background-color: #333;
-        color: #fff;
-        border: none;
-        padding: 50px 50px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s;
-        user-select: none;
-    }
-
-    .footer-button:hover {
-        background-color: #555;
-    }
 
 @media(max-width: 768px){
   textarea {
