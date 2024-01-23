@@ -58,4 +58,15 @@ li {
   border-radius: 4px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
+footer {
+        flex-direction: column;
+        padding: 10px;
+        user-select: none;
+      }
+      .footer-buttons {
+        flex-direction: column;
+        gap: 5px;
+        user-select: none;
+      }
+    }
 
